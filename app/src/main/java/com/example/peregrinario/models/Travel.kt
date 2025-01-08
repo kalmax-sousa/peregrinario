@@ -1,5 +1,7 @@
 package com.example.peregrinario.models
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import com.example.peregrinario.R
 
 data class Travel(
@@ -10,7 +12,7 @@ data class Travel(
     val endDate: String,
     val imageRes: List<Int>,
     val audioRes: List<Int>,
-    var isFavorite: Boolean = false
+    var isFavorite: MutableState<Boolean> = mutableStateOf(false)
 )
 
 val travelList = listOf(
@@ -22,7 +24,7 @@ val travelList = listOf(
         endDate = "10/05/2025",
         imageRes = listOf(R.drawable.rio1, R.drawable.rio2, R.drawable.rio3),
         audioRes = listOf(R.raw.rio_music),
-        isFavorite = true
+        isFavorite = mutableStateOf(true)
     ),
     Travel(
         id = 2,
@@ -32,7 +34,7 @@ val travelList = listOf(
         endDate = "25/06/2025",
         imageRes = listOf(R.drawable.salvador1),
         audioRes = listOf(R.raw.salvador_intro, R.raw.salvador_music),
-        isFavorite = false
+        isFavorite = mutableStateOf(false)
     ),
     Travel(
         id = 3,
@@ -42,7 +44,7 @@ val travelList = listOf(
         endDate = "20/07/2025",
         imageRes = listOf(R.drawable.foz1, R.drawable.foz2, R.drawable.foz3, R.drawable.foz4),
         audioRes = listOf(R.raw.foz_music, R.raw.foz_waterfalls),
-        isFavorite = true
+        isFavorite = mutableStateOf(true)
     ),
     Travel(
         id = 4,
@@ -52,7 +54,7 @@ val travelList = listOf(
         endDate = "10/09/2025",
         imageRes = listOf(R.drawable.floripa1, R.drawable.floripa2),
         audioRes = listOf(R.raw.floripa_music),
-        isFavorite = false
+        isFavorite = mutableStateOf(false)
     ),
     Travel(
         id = 5,
@@ -62,7 +64,7 @@ val travelList = listOf(
         endDate = "30/11/2025",
         imageRes = listOf(R.drawable.manaus1),
         audioRes = listOf(R.raw.manaus_music, R.raw.manaus_forest),
-        isFavorite = false
+        isFavorite = mutableStateOf(false)
     ),
     Travel(
         id = 6,
@@ -72,6 +74,6 @@ val travelList = listOf(
         endDate = "20/04/2025",
         imageRes = listOf(R.drawable.gramado1, R.drawable.gramado2, R.drawable.gramado3),
         audioRes = listOf(R.raw.gramado_music),
-        isFavorite = true
+        isFavorite = mutableStateOf(false)
     )
 )

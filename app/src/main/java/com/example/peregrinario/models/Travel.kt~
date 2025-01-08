@@ -10,7 +10,7 @@ data class Travel(
     val endDate: String,
     val imageRes: List<Int>,
     val audioRes: List<Int>,
-    var isFavorite: Boolean = false
+    var isFavorite: MutableStateof
 )
 
 val travelList = listOf(
@@ -21,7 +21,7 @@ val travelList = listOf(
         startDate = "01/05/2025",
         endDate = "10/05/2025",
         imageRes = listOf(R.drawable.rio1, R.drawable.rio2, R.drawable.rio3),
-        audioRes = listOf(R.raw.rio_intro),
+        audioRes = listOf(R.raw.rio_music),
         isFavorite = true
     ),
     Travel(
@@ -41,7 +41,7 @@ val travelList = listOf(
         startDate = "10/07/2025",
         endDate = "20/07/2025",
         imageRes = listOf(R.drawable.foz1, R.drawable.foz2, R.drawable.foz3, R.drawable.foz4),
-        audioRes = listOf(R.raw.foz_intro, R.raw.foz_waterfalls),
+        audioRes = listOf(R.raw.foz_music, R.raw.foz_waterfalls),
         isFavorite = true
     ),
     Travel(
@@ -51,7 +51,7 @@ val travelList = listOf(
         startDate = "01/09/2025",
         endDate = "10/09/2025",
         imageRes = listOf(R.drawable.floripa1, R.drawable.floripa2),
-        audioRes = listOf(R.raw.floripa_intro),
+        audioRes = listOf(R.raw.floripa_music),
         isFavorite = false
     ),
     Travel(
@@ -61,7 +61,7 @@ val travelList = listOf(
         startDate = "20/11/2025",
         endDate = "30/11/2025",
         imageRes = listOf(R.drawable.manaus1),
-        audioRes = listOf(R.raw.manaus_intro, R.raw.manaus_forest),
+        audioRes = listOf(R.raw.manaus_music, R.raw.manaus_forest),
         isFavorite = false
     ),
     Travel(
@@ -71,7 +71,7 @@ val travelList = listOf(
         startDate = "10/04/2025",
         endDate = "20/04/2025",
         imageRes = listOf(R.drawable.gramado1, R.drawable.gramado2, R.drawable.gramado3),
-        audioRes = listOf(R.raw.gramado_intro),
+        audioRes = listOf(R.raw.gramado_music),
         isFavorite = true
     )
 )

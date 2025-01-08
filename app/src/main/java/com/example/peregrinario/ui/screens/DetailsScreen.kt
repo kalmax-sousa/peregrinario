@@ -30,27 +30,14 @@ import com.example.peregrinario.ui.components.TopAppBarWithMenu
 @ExperimentalMaterial3Api
 @Composable
 fun DetailsScreen(
-    travel: Travel,
-    onSettingsClick: () -> Unit,
-    onHelpClick: () -> Unit,
-    onFavoritesClick: () -> Unit,
-    onHomeClick: () -> Unit
+    travel: Travel
 ) {
     val context = LocalContext.current
     var mediaPlayer by remember { mutableStateOf<MediaPlayer?>(null) }
     var isPlaying by remember { mutableStateOf(false) }
     var audioCurrent by remember { mutableIntStateOf(0) }
 
-    Scaffold(
-        topBar = {
-            TopAppBarWithMenu(
-                onSettingsClick = onSettingsClick,
-                onHelpClick = onHelpClick,
-                onFavoritesClick = onFavoritesClick,
-                onHomeClick = onHomeClick
-            )
-        }
-    ) { paddingValues ->
+    Scaffold{ paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()

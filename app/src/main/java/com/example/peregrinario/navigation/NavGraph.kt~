@@ -33,14 +33,22 @@ sealed class BottomBarScreen(val route: String, val icon: @Composable () -> Unit
 
 @ExperimentalMaterial3Api
 @Composable
-fun NavGraph() {
+fun NavGraph(
+    onSettingsClick: () -> Unit,
+    onHelpClick: () -> Unit,
+    onFavoritesClick: () -> Unit,
+    onHomeClick: () -> Unit
+) {
     val navController = rememberNavController()
 
     Scaffold(
+//        bottomBar = {
+//            BottomNavigationBar(navController = navController)
+//        }
         topBar = {
             TopAppBarWithMenu(
-                onSettingsClick = {},
-                onHelpClick = { },
+                onSettingsClick = onSettingsClick,
+                onHelpClick = onHelpClick,
                 onFavoritesClick = {
                     navController.navigate(BottomBarScreen.Favorites.route)
                 },

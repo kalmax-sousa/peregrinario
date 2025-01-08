@@ -72,7 +72,14 @@ fun HomeScreen(
                             onTravelSelected(selectedTravel)
                         },
                         onFavoriteToggle = { favoriteTravel ->
-                            favoriteTravel.isFavorite.value = !favoriteTravel.isFavorite.value
+                            travels = travels.map {
+                                if (it.destinationName == favoriteTravel.destinationName){
+                                    it.copy(isFavorite = !favoriteTravel.isFavorite)
+                                }
+                                else
+                                    it
+                            }
+                            favoriteTravel.isFavorite = !favoriteTravel.isFavorite
                         }
                     )
                 }

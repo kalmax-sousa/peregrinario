@@ -18,23 +18,10 @@ import com.example.peregrinario.ui.components.TravelListItem
 @Composable
 fun FavoritesScreen(
     onTravelSelected: (Travel) -> Unit,
-    onFavoriteToggle: (Travel) -> Unit,
-    onSettingsClick: () -> Unit,
-    onHelpClick: () -> Unit,
-    onFavoritesClick: () -> Unit,
-    onHomeClick: () -> Unit
+    onFavoriteToggle: (Travel) -> Unit
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBarWithMenu(
-                onSettingsClick = onSettingsClick,
-                onHelpClick = onHelpClick,
-                onFavoritesClick = onFavoritesClick,
-                onHomeClick = onHomeClick
-            )
-        }
-    ) { innerPadding ->
-        val favoriteTravels = travelList.filter { it.isFavorite }
+    Scaffold{ innerPadding ->
+        val favoriteTravels = travelList.filter { it.isFavorite.value }
 
         if (favoriteTravels.isEmpty()) {
             Box(
@@ -51,11 +38,19 @@ fun FavoritesScreen(
                 )
             }
         } else {
-            Text(
-                text = "Favoritos",
-                style = MaterialTheme.typography.titleLarge
-            )
-            Spacer(modifier = Modifier.height(16.dp))
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Favoritos",
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+            Spacer(modifier = Modifier.height(32.dp))
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier

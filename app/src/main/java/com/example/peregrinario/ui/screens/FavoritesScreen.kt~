@@ -11,6 +11,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.peregrinario.models.Travel
 import com.example.peregrinario.models.travelList
+import com.example.peregrinario.ui.components.TopAppBarWithMenu
 import com.example.peregrinario.ui.components.TravelListItem
 
 @ExperimentalMaterial3Api
@@ -19,19 +20,8 @@ fun FavoritesScreen(
     onTravelSelected: (Travel) -> Unit,
     onFavoriteToggle: (Travel) -> Unit
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "Favoritos",
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                }
-            )
-        }
-    ) { innerPadding ->
-        val favoriteTravels = travelList.filter { it.isFavorite }
+    Scaffold{ innerPadding ->
+        val favoriteTravels = travelList.filter { it.isFavorite.value }
 
         if (favoriteTravels.isEmpty()) {
             Box(
@@ -48,6 +38,12 @@ fun FavoritesScreen(
                 )
             }
         } else {
+            Text(
+                text = "Favoritos",
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(16.dp)
+            )
+            Spacer(modifier = Modifier.height(32.dp))
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier
