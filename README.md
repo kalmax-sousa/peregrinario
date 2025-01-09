@@ -2,10 +2,9 @@
 
 Aplicativo de Diário de Viagens desenvolvido para o Trabalho Final da disciplina de Desenvolvimento de Software para Dispositivos Móveis na UFC Quixadá, 2024.2.
 
-### Dupla:
-
-- Francisco Vitor Gomes Castro
-- Kalmax dos Santos souza
+**Dupla**:<br>
+Francisco Vitor Gomes Castro <br>
+Kalmax dos Santos souza
 
 ## Funcionalidades Principais
 
@@ -90,7 +89,11 @@ Aplicativo de Diário de Viagens desenvolvido para o Trabalho Final da disciplin
 
 ## Estrutura do Projeto
 
-O projeto foi desenvolvido utilizando o framework Jetpack Compose com uma organização semelhante à demonstrada em sala de aula em atividades anteriores.
+O projeto foi desenvolvido utilizando o framework Jetpack Compose com uma organização semelhante à demonstrada em sala de aula e em atividades anteriores.
+
+O aplicativo usa um arquivo NavGraph que centraliza e define a navegação entre as telas usando um componente de top bar com um menu de três pontinhos.
+
+A tela inicial (Home) contém uma barra de pesquisa para pesquisar viagens e uma lista de cards (Componente de card de viagem) com as viagens cadastradas. Os cards possuem um botão que permite navegar para a tela de detalhes e outro capaz de marcar a viagem como favorita.
 
 ### Estrutura de pastas
 
