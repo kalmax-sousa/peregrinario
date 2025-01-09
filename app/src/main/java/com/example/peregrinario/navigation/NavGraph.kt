@@ -6,6 +6,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,7 +16,9 @@ import com.example.peregrinario.ui.components.BottomNavigationBar
 import com.example.peregrinario.ui.components.TopAppBarWithMenu
 import com.example.peregrinario.ui.screens.DetailsScreen
 import com.example.peregrinario.ui.screens.FavoritesScreen
+import com.example.peregrinario.ui.screens.HelpScreen
 import com.example.peregrinario.ui.screens.HomeScreen
+import com.example.peregrinario.ui.screens.SettingsScreen
 
 sealed class BottomBarScreen(val route: String, val icon: @Composable () -> Unit, val label: String) {
     object Home : BottomBarScreen(
@@ -29,18 +32,34 @@ sealed class BottomBarScreen(val route: String, val icon: @Composable () -> Unit
         icon = { androidx.compose.material3.Icon(Icons.Default.Favorite, contentDescription = "Favorites") },
         label = "Favoritos"
     )
+
+    object Help : BottomBarScreen(
+        route = "help",
+        icon = { androidx.compose.material3.Icon(Icons.Default.Favorite, contentDescription = "Help") },
+        label = "Ajuda"
+    )
+
+    object Settings : BottomBarScreen(
+        route = "settings",
+        icon = { androidx.compose.material3.Icon(Icons.Default.Favorite, contentDescription = "Settings") },
+        label = "Configurações"
+    )
 }
 
 @ExperimentalMaterial3Api
 @Composable
-fun NavGraph() {
+fun NavGraph(isDarkTheme: MutableState<Boolean>, isNotificationsEnabled: MutableState<Boolean>) {
     val navController = rememberNavController()
 
     Scaffold(
         topBar = {
             TopAppBarWithMenu(
-                onSettingsClick = {},
-                onHelpClick = { },
+                onSettingsClick = {
+                    navController.navigate(BottomBarScreen.Settings.route)
+                },
+                onHelpClick = {
+                    navController.navigate(BottomBarScreen.Help.route)
+                },
                 onFavoritesClick = {
                     navController.navigate(BottomBarScreen.Favorites.route)
                 },
@@ -72,6 +91,15 @@ fun NavGraph() {
                     }
                 )
             }
+            composable(BottomBarScreen.Settings.route) {
+                SettingsScreen(isDarkTheme, isNotificationsEnabled)
+            }
+
+            composable(BottomBarScreen.Help.route) {
+                HelpScreen(isNotificationsEnabled.value)
+            }
+
+
             composable("details/{travelDestinationName}") { backStackEntry ->
                 val travelDestinationName = backStackEntry.arguments?.getString("travelDestinationName")
                 val selectedTravel = travelList.first { it.destinationName == travelDestinationName }
