@@ -39,7 +39,6 @@ Kalmax dos Santos souza
    - Favoritos
    - Configurações
    - Ajuda
-   - Logout (simulado)
 - (<span style="color:yellow">Planejamento</span>) Navegação adicional: 
   - Perfil de usuário
   - Login
@@ -49,7 +48,7 @@ Kalmax dos Santos souza
 
 - Mudança de temas de cor (Claro e Escuro)
 - Habilitar e desabilitar notificações
-- Redefinir preferências e favoritos
+- Redefinir preferências
 
 ### 5. Tela de Suporte (<span style="color:green">Implementado</span>)
 
@@ -97,7 +96,7 @@ A tela inicial (Home) contém uma barra de pesquisa para pesquisar viagens e uma
 
 ### Estrutura de pastas
 
-![alt text](image-2.png)
+![alt text](img.png)
 
 ## Divisão de Trabalho
 
@@ -111,7 +110,8 @@ Durante o decorrer do trabalho, a dupla definiu tarefas individuais e também em
 - Menu Três Pontinhos (implementação)
 - Paleta de cores e personalização (implementação inicial)
 
-### Kalmax dos Santos Souza
+### Kalmax dos Santos Sousa
+- Levantamento de requisitos
 - Menu Três Pontinhos (complementação)
 - Paleta de cores e personalização (complementação)
 - Tela de Configurações (alternância de temas e notificações)

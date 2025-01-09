@@ -12,7 +12,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.peregrinario.models.travelList
-import com.example.peregrinario.ui.components.BottomNavigationBar
 import com.example.peregrinario.ui.components.TopAppBarWithMenu
 import com.example.peregrinario.ui.screens.DetailsScreen
 import com.example.peregrinario.ui.screens.FavoritesScreen
