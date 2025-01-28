@@ -50,6 +50,7 @@ fun TopAppBarWithMenu(
                 Text(
                     text = "Peregrinário",
                     style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.surface,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )

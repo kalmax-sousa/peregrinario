@@ -25,74 +25,74 @@ import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.example.peregrinario.viewmodel.PreferencesViewModel
 
 @Composable
-fun HelpScreen(isNotificationsEnabled: Boolean) {
+fun HelpScreen(preferencesViewModel: PreferencesViewModel) {
     val context = LocalContext.current
     var userMessage by remember { mutableStateOf("") }
 
-    Scaffold(
-    ) { paddingValues ->
-        Column(
+    val isNotificationsEnabled by preferencesViewModel.notifications.collectAsState()
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Text(
+            text = "Perguntas Frequentes",
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.primary
+        )
+
+        FAQItem(
+            question = "Como cadastro uma nova viagem?",
+            answer = "Você pode cadastrar uma nova viagem clicando no botão 'Adicionar Viagem' na tela inicial."
+        )
+
+        FAQItem(
+            question = "Posso exportar minhas viagens?",
+            answer = "Sim, vá até os detalhes da viagem e selecione a opção de exportar para PDF."
+        )
+
+        FAQItem(
+            question = "Como altero meu tema?",
+            answer = "Acesse o menu de configurações no seu perfil e selecione o tema desejado."
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = "Fale Conosco",
+            style = MaterialTheme.typography.headlineSmall,
+            color = MaterialTheme.colorScheme.primary
+        )
+
+        BasicTextField(
+            value = userMessage,
+            onValueChange = { userMessage = it },
             modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .fillMaxWidth()
+                .height(120.dp)
+                .border(1.dp, Color.Gray, MaterialTheme.shapes.medium)
+                .padding(8.dp),
+            textStyle = MaterialTheme.typography.bodyLarge.copy(color = Color.Black),
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done)
+        )
+
+        Button(
+            onClick = {
+                sendHelpNotification(context, isNotificationsEnabled)
+                Toast.makeText(context, "Mensagem enviada com sucesso!", Toast.LENGTH_LONG).show()
+                userMessage = ""
+            },
+            modifier = Modifier.align(Alignment.End)
         ) {
-            Text(
-                text = "Perguntas Frequentes",
-                style = MaterialTheme.typography.headlineMedium,
-                color = MaterialTheme.colorScheme.primary
-            )
-
-            FAQItem(
-                question = "Como cadastro uma nova viagem?",
-                answer = "Você pode cadastrar uma nova viagem clicando no botão 'Adicionar Viagem' na tela inicial."
-            )
-
-            FAQItem(
-                question = "Posso exportar minhas viagens?",
-                answer = "Sim, vá até os detalhes da viagem e selecione a opção de exportar para PDF."
-            )
-
-            FAQItem(
-                question = "Como altero meu tema?",
-                answer = "Acesse o menu de configurações no seu perfil e selecione o tema desejado."
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(
-                text = "Fale Conosco",
-                style = MaterialTheme.typography.headlineSmall,
-                color = MaterialTheme.colorScheme.primary
-            )
-
-            BasicTextField(
-                value = userMessage,
-                onValueChange = { userMessage = it },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(120.dp)
-                    .border(1.dp, Color.Gray, MaterialTheme.shapes.medium)
-                    .padding(8.dp),
-                textStyle = MaterialTheme.typography.bodyLarge.copy(color = Color.Black),
-                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done)
-            )
-
-            Button(
-                onClick = {
-                    sendHelpNotification(context, isNotificationsEnabled)
-                    Toast.makeText(context, "Mensagem enviada com sucesso!", Toast.LENGTH_LONG).show()
-                    userMessage = ""
-                },
-                modifier = Modifier.align(Alignment.End)
-            ) {
-                Text("Enviar")
-            }
+            Text("Enviar")
         }
     }
+
 }
 
 @Composable

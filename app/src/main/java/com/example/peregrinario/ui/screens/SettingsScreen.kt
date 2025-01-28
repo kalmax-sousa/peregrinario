@@ -4,49 +4,75 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.peregrinario.viewmodel.PreferencesViewModel
 
 @ExperimentalMaterial3Api
 @Composable
-fun SettingsScreen(isDarkTheme: MutableState<Boolean>, isNotificationsEnabled: MutableState<Boolean>) {
-    Scaffold { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+fun SettingsScreen(preferencesViewModel: PreferencesViewModel) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text("Configurações", style = MaterialTheme.typography.titleLarge)
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text("Configurações", style = MaterialTheme.typography.titleLarge)
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text("Tema escuro", style = MaterialTheme.typography.bodyLarge)
-                Switch(
-                    checked = isDarkTheme.value,
-                    onCheckedChange = { isDarkTheme.value = it }
+            Text("Tema escuro", style = MaterialTheme.typography.bodyLarge)
+            Switch(
+                checked = preferencesViewModel.darkMode.collectAsState().value,
+                onCheckedChange = { preferencesViewModel.setDarkMode(it) },
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = MaterialTheme.colorScheme.surface
                 )
-            }
+            )
+        }
 
-            NotificationSettings(isNotificationsEnabled)
+        NotificationSettings(preferencesViewModel)
 
-            Button(onClick = {
-                isDarkTheme.value = false
-                isNotificationsEnabled.value = true
-            }) {
-                Text(text = "Restaurar configurações")
-            }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = "Animações de tela",
+                style = MaterialTheme.typography.bodyLarge
+                )
+            Switch(
+                checked = preferencesViewModel.displayAnimations.collectAsState().value,
+                onCheckedChange = { preferencesViewModel.setDisplayAnimations(it) },
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = MaterialTheme.colorScheme.surface
+                )
+            )
+        }
+
+        Button(
+            onClick = {
+                preferencesViewModel.setDarkMode(false)
+                preferencesViewModel.setNotifications(false)
+                preferencesViewModel.setDisplayAnimations(false)
+            },
+
+        ) {
+            Text(
+                text = "Restaurar configurações",
+                color = MaterialTheme.colorScheme.surface
+            )
         }
     }
 }
 
 @Composable
-fun NotificationSettings(isNotificationsEnabled: MutableState<Boolean>) {
+fun NotificationSettings(preferencesViewModel: PreferencesViewModel) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text("Notificações", style = MaterialTheme.typography.titleMedium)
         Row(
@@ -55,8 +81,11 @@ fun NotificationSettings(isNotificationsEnabled: MutableState<Boolean>) {
         ) {
             Text("Ativar notificações", style = MaterialTheme.typography.bodyLarge)
             Switch(
-                checked = isNotificationsEnabled.value,
-                onCheckedChange = { isNotificationsEnabled.value = it }
+                checked = preferencesViewModel.notifications.collectAsState().value,
+                onCheckedChange = { preferencesViewModel.setNotifications(it) },
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = MaterialTheme.colorScheme.surface
+                )
             )
         }
     }

@@ -7,13 +7,10 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.peregrinario.models.Travel
 import com.example.peregrinario.models.travelList
 import com.example.peregrinario.ui.components.TopAppBarWithMenu
 import com.example.peregrinario.ui.screens.DetailsScreen
@@ -54,8 +51,6 @@ sealed class BottomBarScreen(val route: String, val icon: @Composable () -> Unit
 fun NavGraph(preferencesViewModel: PreferencesViewModel) {
     val navController = rememberNavController()
 
-    val recentSearches = remember { mutableStateListOf<Travel>() }
-
     Scaffold(
         topBar = {
             TopAppBarWithMenu(
@@ -83,8 +78,7 @@ fun NavGraph(preferencesViewModel: PreferencesViewModel) {
                 HomeScreen(
                     onTravelSelected = { travel ->
                         navController.navigate("details/${travel.destinationName}")
-                    },
-                    recentSearches
+                    }
                 )
             }
             composable(BottomBarScreen.Favorites.route) {

@@ -30,7 +30,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.peregrinario.models.Travel
-import kotlinx.coroutines.launch
 
 @Composable
 fun TravelListItem (travel: Travel, onTravelSelected: (Travel) -> Unit, onFavoriteToggle: (Travel) -> Unit) {
@@ -82,11 +81,7 @@ fun TravelListItem (travel: Travel, onTravelSelected: (Travel) -> Unit, onFavori
                 } else {
                     IconButton(
                         onClick = {
-                            isFavoriting = true
-                            coroutineScope.launch {
-                                onFavoriteToggle(travel)
-                                isFavoriting = false
-                            }
+                            onFavoriteToggle(travel)
                         },
                         enabled = !isFavoriting) {
                         Icon(

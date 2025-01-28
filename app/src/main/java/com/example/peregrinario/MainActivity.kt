@@ -10,11 +10,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.peregrinario.navigation.NavGraph
+import com.example.peregrinario.repository.PreferencesRepository
 import com.example.peregrinario.ui.theme.PeregrinarioAppTheme
+import com.example.peregrinario.viewmodel.PreferencesViewModel
+import com.example.peregrinario.viewmodel.PreferencesViewModelFactory
 
 @ExperimentalMaterial3Api
 class MainActivity : ComponentActivity() {
@@ -36,12 +39,13 @@ class MainActivity : ComponentActivity() {
             checkNotificationPermission()
         }
 
-        setContent {
-            val isDarkTheme = remember { mutableStateOf(false) }
-            val isNotificationsEnabled = remember { mutableStateOf(true) }
+        val preferencesRepository = PreferencesRepository(this)
 
-            PeregrinarioAppTheme(darkTheme = isDarkTheme.value) {
-                NavGraph(isDarkTheme, isNotificationsEnabled)
+        setContent {
+            val preferencesViewModel : PreferencesViewModel = viewModel(factory = PreferencesViewModelFactory(preferencesRepository))
+
+            PeregrinarioAppTheme(darkTheme = preferencesViewModel.darkMode.collectAsState().value) {
+                NavGraph(preferencesViewModel)
             }
         }
     }

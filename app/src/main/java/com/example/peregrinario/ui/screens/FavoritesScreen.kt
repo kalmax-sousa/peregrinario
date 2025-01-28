@@ -20,51 +20,47 @@ fun FavoritesScreen(
     onTravelSelected: (Travel) -> Unit,
     onFavoriteToggle: (Travel) -> Unit
 ) {
-    Scaffold{ innerPadding ->
-        val favoriteTravels = travelList.filter { it.isFavorite.value }
+    val favoriteTravels = travelList.filter { it.isFavorite.value }
 
-        if (favoriteTravels.isEmpty()) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "Você ainda não adicionou favoritos.",
-                    style = MaterialTheme.typography.titleMedium,
-                    textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+    if (favoriteTravels.isEmpty()) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "Você ainda não adicionou favoritos.",
+                style = MaterialTheme.typography.titleMedium,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+    } else {
+        Box(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "Favoritos",
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+        Spacer(modifier = Modifier.height(32.dp))
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier
+                .padding(horizontal = 8.dp)
+        ) {
+            items(favoriteTravels) { travel ->
+                TravelListItem(
+                    travel = travel,
+                    onTravelSelected = { onTravelSelected(it) },
+                    onFavoriteToggle = { onFavoriteToggle(it) }
                 )
-            }
-        } else {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "Favoritos",
-                    style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.padding(16.dp)
-                )
-            }
-            Spacer(modifier = Modifier.height(32.dp))
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .padding(horizontal = 8.dp)
-            ) {
-                items(favoriteTravels) { travel ->
-                    TravelListItem(
-                        travel = travel,
-                        onTravelSelected = { onTravelSelected(it) },
-                        onFavoriteToggle = { onFavoriteToggle(it) }
-                    )
-                }
             }
         }
     }
+
 }

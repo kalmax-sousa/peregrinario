@@ -37,94 +37,91 @@ fun DetailsScreen(
     var isPlaying by remember { mutableStateOf(false) }
     var audioCurrent by remember { mutableIntStateOf(0) }
 
-    Scaffold{ paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(16.dp)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
+        Text(
+            text = travel.destinationName,
+            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
         ) {
-            Text(
-                text = travel.destinationName,
-                style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
-            ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Text(
-                        text = "Detalhes da Viagem",
-                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = travel.description,
-                        style = MaterialTheme.typography.bodyMedium,
-                        lineHeight = 20.sp
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = "Inicio: ${travel.startDate} - Fim: ${travel.endDate}",
-                        style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold)
-                    )
-                }
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = "Detalhes da Viagem",
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = travel.description,
+                    style = MaterialTheme.typography.bodyMedium,
+                    lineHeight = 20.sp
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "Inicio: ${travel.startDate} - Fim: ${travel.endDate}",
+                    style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold)
+                )
             }
+        }
 
-            Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-            LazyRow(
-                modifier = Modifier.fillMaxWidth()
-            ){
-                items(travel.audioRes){ audio ->
-                    Button(onClick = {
-                        if (isPlaying) {
-                            mediaPlayer?.pause()
-                            isPlaying = false
-                            Log.d("AudioPlayer", "Audio paused")
-                        } else {
-                            if (mediaPlayer == null || audio != audioCurrent) {
-                                audioCurrent = audio
-                                mediaPlayer = MediaPlayer.create(context, audio)
-                                mediaPlayer?.setOnCompletionListener {
-                                    it.release()
-                                    mediaPlayer = null
-                                    isPlaying = false
-                                }
+        LazyRow(
+            modifier = Modifier.fillMaxWidth()
+        ){
+            items(travel.audioRes){ audio ->
+                Button(onClick = {
+                    if (isPlaying) {
+                        mediaPlayer?.pause()
+                        isPlaying = false
+                        Log.d("AudioPlayer", "Audio paused")
+                    } else {
+                        if (mediaPlayer == null || audio != audioCurrent) {
+                            audioCurrent = audio
+                            mediaPlayer = MediaPlayer.create(context, audio)
+                            mediaPlayer?.setOnCompletionListener {
+                                it.release()
+                                mediaPlayer = null
+                                isPlaying = false
                             }
-                            mediaPlayer?.start()
-                            isPlaying = true
                         }
-                    }) {
-                        Text(
-                            (if (isPlaying && audioCurrent == audio) "Pausar " else "Executar ") +
-                            context.resources.getResourceEntryName(audio)
-                        )
+                        mediaPlayer?.start()
+                        isPlaying = true
                     }
-                    Spacer(modifier = Modifier.width(8.dp))
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            LazyColumn (
-                modifier = Modifier.fillMaxWidth().padding(0.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                contentPadding = PaddingValues(0.dp)
-            ) {
-                items(travel.imageRes) { image ->
-                    Image(
-                        painter = painterResource(id = image),
-                        contentDescription = "Imagem de ${travel.destinationName}",
-                        modifier = Modifier
-                            .size(350.dp)
-                            .align(Alignment.CenterHorizontally)
-                            .padding(0.dp),
+                }) {
+                    Text(
+                        (if (isPlaying && audioCurrent == audio) "Pausar " else "Executar ") +
+                        context.resources.getResourceEntryName(audio)
                     )
                 }
+                Spacer(modifier = Modifier.width(8.dp))
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        LazyColumn (
+            modifier = Modifier.fillMaxWidth().padding(0.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            contentPadding = PaddingValues(0.dp)
+        ) {
+            items(travel.imageRes) { image ->
+                Image(
+                    painter = painterResource(id = image),
+                    contentDescription = "Imagem de ${travel.destinationName}",
+                    modifier = Modifier
+                        .size(350.dp)
+                        .align(Alignment.CenterHorizontally)
+                        .padding(0.dp),
+                )
             }
         }
     }
