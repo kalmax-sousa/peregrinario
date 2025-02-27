@@ -2,6 +2,9 @@ package com.example.peregrinario.models
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 import com.example.peregrinario.R
 
 data class Travel(
@@ -77,3 +80,34 @@ val travelList = listOf(
         isFavorite = mutableStateOf(false)
     )
 )
+
+/*
+@Entity(tableName = "travels")
+data class Travel(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val firebaseId: String?, // Null para quem não tem conta
+    val userId: String?, // Se a viagem pertence a um usuário logado
+    val name: String,
+    val startDate: Long,
+    val endDate: Long
+)
+
+@Entity(
+    tableName = "travel_contents",
+    foreignKeys = [ForeignKey(entity = Travel::class, parentColumns = ["id"], childColumns = ["travelId"], onDelete = ForeignKey.CASCADE)]
+)
+data class TravelContent(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val travelId: Long,
+    val firebaseId: String?, // ID no Firebase
+    val type: ContentType,  // IMAGE, AUDIO, LOCATION
+    val data: String?,  // URL da imagem ou áudio
+    val description: String?,
+    val latitude: Double?,
+    val longitude: Double?,
+    val timestamp: Long = System.currentTimeMillis()
+)
+
+enum class ContentType {
+    IMAGE, AUDIO, LOCATION
+}*/

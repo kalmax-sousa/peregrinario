@@ -59,7 +59,7 @@ sealed class BottomBarScreen(val route: String, val icon: @Composable () -> Unit
 */
 @ExperimentalMaterial3Api
 @Composable
-fun NavGraph(preferencesViewModel: PreferencesViewModel, authViewModel: AuthViewModel) {
+fun NavGraph(preferencesViewModel: PreferencesViewModel, authViewModel: AuthViewModel, modifier: Modifier) {
     val navController = rememberNavController()
 
     val recentSearches = remember { mutableStateListOf<Travel>() }
