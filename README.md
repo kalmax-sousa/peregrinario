@@ -64,27 +64,30 @@ Kalmax dos Santos souza
   - Lista de <span style="color:orange">**Registros** (Imagens e Áudios com descrição e localização)</span> 
   - Marcar como favorita
 
-### 7. Tela de Perfil (<span style="color:yellow">Planejamento</span>)
+### 7. Tela de Perfil (<span style="color:red">Não implementado</span>)
 
 - O usuário deve visualizar:
   - Foto do perfil
   - Estatísticas de viagens realizadas no ano
   - Classificação de acordo com o número de viagens realizadas.
 
-### 8. Mapa Interativo (<span style="color:yellow">Planejamento</span>)
+### 8. Mapa Interativo (<span style="color:red">Não implementado</span>)
 
 - O usuário deve poder abrir uma visualização de mapa mostrando os locais já visitados.
 - Deve haver um botão para acessar o mapa (local a definir).
 
-### 9. Exportação de Diário (<span style="color:yellow">Planejamento</span>)
+### 9. Login (<span style="color:green">Implementado</span>)
 
-- O usuário deve poder exportar o diário de uma viagem para PDF.
-- Deve permitir escolher quais conteúdos incluir na exportação (fotos, áudios e descrições).
+- O usuário deve poder realizar login com o Google.
+- O usuário deve poder realizar login com o email e senha.
+- O usuário deve poder realizar logout.
+- O usuário deve poder se registrar com nome, email e senha.
+- O usuário deve poder pedir email de recuperação.
 
-### 10. Compartilhamento de Viagens (<span style="color:yellow">Planejamento</span>)
+### 10. Bottom Navigation (<span style="color:green">Implementado</span>)
 
-- O usuário deve poder compartilhar detalhes de uma viagem em redes sociais.
-- Deve permitir a seleção dos elementos a serem compartilhados.
+- O usuário deve poder navegar entre as telas de Home, Favoritos, pesquisa e Perfil.
+- O usuário deve poder criar uma nova viagem.
 
 ## Estrutura do Projeto
 
@@ -109,6 +112,10 @@ Durante o decorrer do trabalho, a dupla definiu tarefas individuais e também em
 - Tela de favoritos
 - Menu Três Pontinhos (implementação)
 - Paleta de cores e personalização (implementação inicial)
+- Armazenamento de preferências com Jetpack DataStore (implementação)
+- Progresso e feedback visual com progress bar's (implementação)
+- Animações com jetpack compose animations nas telas e elementos interativos (implementação)
+- Agendamento de notificação com BroadcastReceiver (implementação)
 
 ### Kalmax dos Santos Sousa
 - Levantamento de requisitos
@@ -117,3 +124,7 @@ Durante o decorrer do trabalho, a dupla definiu tarefas individuais e também em
 - Tela de Configurações (alternância de temas e notificações)
 - Tela de Suporte (simulação de ajuda e envio de dúvidas)
 - Gravação de video demonstração
+- Banco de dados local com ROOM Database (Implementação)
+- Firebase Realtime Database para salvar viagens (Implementação)
+- Firebase user e google social Authentication (Implementação)
+- Aplicando Sensibilidade ao contexto ao detectar conexão a internet (Implementação)
