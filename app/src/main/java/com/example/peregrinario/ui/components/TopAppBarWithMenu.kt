@@ -32,9 +32,7 @@ import com.example.peregrinario.R
 fun TopAppBarWithMenu(
     onSettingsClick: () -> Unit,
     onHelpClick: () -> Unit,
-    onFavoritesClick: () -> Unit,
-    onHomeClick: () -> Unit,
-    onLogoutClick: () -> Unit
+    onLogoutClick: () -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -69,20 +67,6 @@ fun TopAppBarWithMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {
-                DropdownMenuItem(
-                    text = { Text("Tela Inicial") },
-                    onClick = {
-                        expanded = false
-                        onHomeClick()
-                    }
-                )
-                DropdownMenuItem(
-                    text = { Text("Favoritos") },
-                    onClick = {
-                        expanded = false
-                        onFavoritesClick()
-                    }
-                )
                 DropdownMenuItem(
                     text = { Text("Configurações") },
                     onClick = {

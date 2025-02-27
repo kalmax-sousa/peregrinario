@@ -15,6 +15,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -42,6 +43,12 @@ fun HomeScreen(
     var travels by remember { mutableStateOf(travelList) }
     var filteredTravels by remember { mutableStateOf(travels) }
     var isLoading by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        delay(2000)
+        filteredTravels = travels
+        isLoading = false
+    }
 
     val coroutineScope = rememberCoroutineScope()
 

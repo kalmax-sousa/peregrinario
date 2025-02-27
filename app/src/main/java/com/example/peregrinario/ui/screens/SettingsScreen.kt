@@ -58,8 +58,8 @@ fun SettingsScreen(preferencesViewModel: PreferencesViewModel) {
         Button(
             onClick = {
                 preferencesViewModel.setDarkMode(false)
-                preferencesViewModel.setNotifications(false)
-                preferencesViewModel.setDisplayAnimations(false)
+                preferencesViewModel.setNotifications(true)
+                preferencesViewModel.setDisplayAnimations(true)
             },
 
         ) {

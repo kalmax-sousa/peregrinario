@@ -13,7 +13,6 @@ import com.example.peregrinario.models.Travel
 import com.example.peregrinario.models.travelList
 import com.example.peregrinario.ui.components.TopAppBarWithMenu
 import com.example.peregrinario.ui.components.TravelListItem
-
 @ExperimentalMaterial3Api
 @Composable
 fun FavoritesScreen(
@@ -22,32 +21,33 @@ fun FavoritesScreen(
 ) {
     val favoriteTravels = travelList.filter { it.isFavorite.value }
 
-    if (favoriteTravels.isEmpty()) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "Você ainda não adicionou favoritos.",
-                style = MaterialTheme.typography.titleMedium,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-    } else {
-        Box(
-            modifier = Modifier
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        if (favoriteTravels.isEmpty()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Você ainda não adicionou favoritos.",
+                    style = MaterialTheme.typography.titleMedium,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        } else {
             Text(
                 text = "Favoritos",
                 style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.padding(16.dp)
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .align(Alignment.Start)
             )
         }
-        Spacer(modifier = Modifier.height(32.dp))
+
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier
@@ -62,5 +62,4 @@ fun FavoritesScreen(
             }
         }
     }
-
 }
