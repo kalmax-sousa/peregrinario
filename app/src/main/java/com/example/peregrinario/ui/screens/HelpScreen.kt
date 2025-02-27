@@ -126,9 +126,7 @@ fun sendHelpNotification(context: Context, isNotificationsEnabled: Boolean) {
     val importance = NotificationManager.IMPORTANCE_DEFAULT
     val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    // Verifica se a versão do Android é 8.0 (API 26) ou superior
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        // Cria o canal de notificação
         val channel = NotificationChannel(channelId, channelName, importance).apply {
             description = "Canal para notificações de ajuda"
         }
@@ -143,6 +141,20 @@ fun sendHelpNotification(context: Context, isNotificationsEnabled: Boolean) {
         .build()
 
     with(NotificationManagerCompat.from(context)) {
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
         notify(1, notification)
     }
 }

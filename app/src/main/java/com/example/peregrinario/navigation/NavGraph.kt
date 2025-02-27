@@ -1,25 +1,37 @@
 package com.example.peregrinario.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.peregrinario.models.Travel
 import com.example.peregrinario.models.travelList
 import com.example.peregrinario.ui.components.TopAppBarWithMenu
+import com.example.peregrinario.ui.components.StandardBottomNavigation
 import com.example.peregrinario.ui.screens.DetailsScreen
 import com.example.peregrinario.ui.screens.FavoritesScreen
 import com.example.peregrinario.ui.screens.ForgotPasswordScreen
@@ -30,33 +42,7 @@ import com.example.peregrinario.ui.screens.RegisterScreen
 import com.example.peregrinario.ui.screens.SettingsScreen
 import com.example.peregrinario.viewmodel.AuthViewModel
 import com.example.peregrinario.viewmodel.PreferencesViewModel
-/*
-sealed class BottomBarScreen(val route: String, val icon: @Composable () -> Unit, val label: String) {
-    object Home : BottomBarScreen(
-        route = "home",
-        icon = { androidx.compose.material3.Icon(Icons.Default.Home, contentDescription = "Home") },
-        label = "Home"
-    )
 
-    object Favorites : BottomBarScreen(
-        route = "favorites",
-        icon = { androidx.compose.material3.Icon(Icons.Default.Favorite, contentDescription = "Favorites") },
-        label = "Favoritos"
-    )
-
-    object Help : BottomBarScreen(
-        route = "help",
-        icon = { androidx.compose.material3.Icon(Icons.Default.Favorite, contentDescription = "Help") },
-        label = "Ajuda"
-    )
-
-    object Settings : BottomBarScreen(
-        route = "settings",
-        icon = { androidx.compose.material3.Icon(Icons.Default.Favorite, contentDescription = "Settings") },
-        label = "Configurações"
-    )
-}
-*/
 @ExperimentalMaterial3Api
 @Composable
 fun NavGraph(preferencesViewModel: PreferencesViewModel, authViewModel: AuthViewModel, modifier: Modifier) {
@@ -64,6 +50,7 @@ fun NavGraph(preferencesViewModel: PreferencesViewModel, authViewModel: AuthView
 
     val recentSearches = remember { mutableStateListOf<Travel>() }
     var isUserLogged by remember { mutableStateOf(false) }
+    val isAnimationsEnabled by preferencesViewModel.displayAnimations.collectAsState()
 
     LaunchedEffect(navController.currentBackStackEntry) {
         authViewModel.getUser { user ->
@@ -77,24 +64,95 @@ fun NavGraph(preferencesViewModel: PreferencesViewModel, authViewModel: AuthView
                 TopAppBarWithMenu(
                     onSettingsClick = { navController.navigate(Screen.Settings.route) },
                     onHelpClick = { navController.navigate(Screen.Help.route) },
-                    onFavoritesClick = { navController.navigate(Screen.Favorites.route) },
-                    onHomeClick = { navController.navigate(Screen.Home.route) },
                     onLogoutClick = {
                         authViewModel.logout()
                         isUserLogged = false
                         navController.navigate(Screen.Login.route) {
-                            popUpTo(Screen.Login.route) { inclusive = true } // Evita voltar para telas protegidas
+                            popUpTo(Screen.Login.route) {
+                                inclusive = true
+                            }
                         }
                     }
                 )
             }
-        }
+        },
+        bottomBar = {
+            if (isUserLogged) {
+                BottomAppBar(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    tonalElevation = 0.dp
+                ) {
+                    StandardBottomNavigation(
+                        items = bottomNavItems,
+                        navController = navController
+                    )
+                }
+            }
+        },
+        floatingActionButton = {
+            if (isUserLogged) {
+                Box(
+                    Modifier.offset(y = 60.dp).size(60.dp)
+                ){
+                    Box(
+                        Modifier
+                            .background(color = MaterialTheme.colorScheme.surfaceContainer, shape = CircleShape)
+                            .size(70.dp).shadow(5.dp, shape = CircleShape)
+                    ){
+                        FloatingActionButton(
+                            modifier = Modifier.clip(CircleShape).size(60.dp)
+                                .shadow(10.dp, shape = CircleShape),
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            onClick = {
+
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Add,
+                                tint = Color.Black,
+                                contentDescription = null
+                            )
+                        }
+                    }
+                }
+            }
+        },
+        floatingActionButtonPosition = FabPosition.Center
     ) { innerPadding ->
         NavHost(
             navController = navController,
             startDestination = if (isUserLogged) Screen.Home.route else Screen.Login.route,
-            modifier = Modifier.padding(innerPadding)
-        ) {
+            modifier = Modifier.padding(innerPadding),
+            enterTransition = {
+                if (isAnimationsEnabled) {
+                    scaleIn(animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing))
+                } else {
+                    EnterTransition.None
+                }
+            },
+            exitTransition = {
+                if (isAnimationsEnabled) {
+                    scaleOut(animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing))
+                } else {
+                    ExitTransition.None
+                }
+            },
+            popEnterTransition = {
+                if (isAnimationsEnabled) {
+                    scaleIn(animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing))
+                } else {
+                    EnterTransition.None
+                }
+            },
+            popExitTransition = {
+                if (isAnimationsEnabled) {
+                    scaleOut(animationSpec = tween(durationMillis = 500, easing = FastOutSlowInEasing))
+                } else {
+                    ExitTransition.None
+                }
+            }
+        )
+        {
             composable(Screen.Login.route) {
                 LoginScreen(
                     viewModel = authViewModel,
