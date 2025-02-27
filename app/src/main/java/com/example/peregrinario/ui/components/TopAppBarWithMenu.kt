@@ -33,7 +33,8 @@ fun TopAppBarWithMenu(
     onSettingsClick: () -> Unit,
     onHelpClick: () -> Unit,
     onFavoritesClick: () -> Unit,
-    onHomeClick: () -> Unit
+    onHomeClick: () -> Unit,
+    onLogoutClick: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -94,6 +95,13 @@ fun TopAppBarWithMenu(
                     onClick = {
                         expanded = false
                         onHelpClick()
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text("Sair") },
+                    onClick = {
+                        expanded = false
+                        onLogoutClick()
                     }
                 )
             }

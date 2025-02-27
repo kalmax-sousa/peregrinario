@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "40882652055",
+    "project_id": "peregrinario-23e60",
+    "storage_bucket": "peregrinario-23e60.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:40882652055:android:e3d976453fc9ceb37c7ad2",
+        "android_client_info": {
+          "package_name": "com.example.peregrinario"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "40882652055-u0ab0oesbev3b1opgmeqfg516agg25pq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.peregrinario",
+            "certificate_hash": "f9d1fe1237eb0e72e9aac823cb281b3436b5b5f6"
+          }
+        },
+        {
+          "client_id": "40882652055-s101mdgd99v6jg1l1o03gifc31lhb35c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQqvXQypjhy0UPIctopqfQdC9-pyBQdgs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "40882652055-s101mdgd99v6jg1l1o03gifc31lhb35c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
