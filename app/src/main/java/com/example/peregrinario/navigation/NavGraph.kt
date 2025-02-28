@@ -19,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -49,18 +50,23 @@ fun NavGraph(preferencesViewModel: PreferencesViewModel, authViewModel: AuthView
     val navController = rememberNavController()
 
     val recentSearches = remember { mutableStateListOf<Travel>() }
-    var isUserLogged by remember { mutableStateOf(false) }
     val isAnimationsEnabled by preferencesViewModel.displayAnimations.collectAsState()
 
-    LaunchedEffect(navController.currentBackStackEntry) {
+    var isUserLogged by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
         authViewModel.getUser { user ->
             isUserLogged = user != null
         }
     }
 
+    val userLoggedState = rememberUpdatedState(isUserLogged)
+
+
+
     Scaffold(
         topBar = {
-            if (isUserLogged) {
+            if (userLoggedState.value) {
                 TopAppBarWithMenu(
                     onSettingsClick = { navController.navigate(Screen.Settings.route) },
                     onHelpClick = { navController.navigate(Screen.Help.route) },
@@ -77,7 +83,7 @@ fun NavGraph(preferencesViewModel: PreferencesViewModel, authViewModel: AuthView
             }
         },
         bottomBar = {
-            if (isUserLogged) {
+            if (userLoggedState.value) {
                 BottomAppBar(
                     containerColor = MaterialTheme.colorScheme.surface,
                     tonalElevation = 0.dp

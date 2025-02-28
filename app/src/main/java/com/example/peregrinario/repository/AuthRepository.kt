@@ -90,9 +90,11 @@ class AuthRepository (context: Context) {
                 val snapshot = userRef.get().await()
 
                 if (!snapshot.exists()) {
-                    val localUser = User(id = uid, name = name, email = email, isLoggedIn = true, profilePicUrl = "")
-                    userRef.set(localUser).await()
+                    userRef.set(User(id = uid, name = name, email = email, isLoggedIn = true, profilePicUrl = "")).await()
+                }
 
+                if(userDao.getUser() == null){
+                    val localUser = User(id = uid, name = name, email = email, isLoggedIn = true, profilePicUrl = "")
                     userDao.insertUser(localUser)
                 }
             }

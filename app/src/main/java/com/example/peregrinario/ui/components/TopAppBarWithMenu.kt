@@ -38,12 +38,12 @@ fun TopAppBarWithMenu(
 
     TopAppBar(
         title = {
-            Row(verticalAlignment = Alignment.Top) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Image(
-                    painter = painterResource(id = R.drawable.icon_app),
+                    painter = painterResource(id = R.drawable.ic_launcher_foreground),
                     contentDescription = "App Logo",
                     modifier = Modifier
-                        .size(30.dp)
+                        .size(50.dp)
                         .padding(end = 8.dp)
                 )
                 Text(
