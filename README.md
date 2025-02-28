@@ -123,7 +123,7 @@ Durante o decorrer do trabalho, a dupla definiu tarefas individuais e também em
 - Paleta de cores e personalização (complementação)
 - Tela de Configurações (alternância de temas e notificações)
 - Tela de Suporte (simulação de ajuda e envio de dúvidas)
-- Gravação de video demonstração
+- Gravação de video demonstração (Etapa 1)
 - Banco de dados local com ROOM Database (Implementação)
 - Firebase Realtime Database para salvar viagens (Implementação)
 - Firebase user e google social Authentication (Implementação)
